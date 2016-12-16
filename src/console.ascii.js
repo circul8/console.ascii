@@ -1,7 +1,7 @@
 {
 	class ascii {
 
-		constructor({source = 'clipart', color = true, width = 120, chars = ['@','#','+','.', ' '], verbose = false, debug = false, sourceSettings = {}} = {}) {
+		constructor({source = 'clipart', color = true, width = 120, chars = ['@','#','$','=','*','!',';',':','~','-',',','.',' '], verbose = false, debug = false, sourceSettings = {}, callback = null} = {}) {
 
 			/** @type {Array} Default sources for ASCII images. */
 			const sources = ['clipart', 'google', 'flickr'];
@@ -31,6 +31,9 @@
 
 			/** @type {object} Various settings for sources, especially for Google Images. */
 			this.sourceSettings = sourceSettings;
+
+			/** Callback function */
+			this.callback = callback;
 
 			/**
 			 * CONSTANTS
@@ -104,12 +107,18 @@
 
 				const charLen = this.chars.length - 1;
 				const getChar = (val) => { return this.chars[Math.round(val * charLen)]; }
+				const isAlpha = (rgbA, val) => { return rgbA == 0 && val == 0; }
 				const imgData = ctx.getImageData(0, 0, img.width, img.height).data;
 				let row = [''];
 
 				for (let i = 0; i < img.width * img.height; i++) {
-					const [R, G, B] = [imgData[i * 4], imgData[i * 4 + 1], imgData[i * 4 + 2]];
-					const val = (0.2126 * R + 0.7152 * G + 0.0722 * B) / 255
+					const [iR, iG, iB, iA] = [i * 4, i * 4 + 1, i * 4 + 2, i * 4 + 3];
+					let [R, G, B] = [imgData[iR], imgData[iG], imgData[iB]];
+					let val = (0.2126 * R + 0.7152 * G + 0.0722 * B) / 255;
+					if (isAlpha(imgData[iA], val)) {
+						val = 1;
+						[R, G, B] = [255, 255, 255];
+					}
 					row[0] += `%c${getChar(val)}`;
 					row.push(`color: #fff; background-color: rgb(${R}, ${G}, ${B}); font-family: monospace, fixed; font-weight: bold;`);
 					if (i % img.width === 0 && i !== 0) {
@@ -120,6 +129,9 @@
 						}
 						row = [''];
 					}
+				}
+				if (typeof this.callback === 'function') {
+					this.callback();
 				}
 			}
 		}
