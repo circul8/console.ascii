@@ -1,6 +1,6 @@
 {
   "name": "console.ascii",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Let's extend javascript console by adding some funny ascii art there! 💥",
   "main": "console.ascii.js",
   "scripts": {

@@ -18,13 +18,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 				    _ref$width = _ref.width,
 				    width = _ref$width === undefined ? 120 : _ref$width,
 				    _ref$chars = _ref.chars,
-				    chars = _ref$chars === undefined ? ['@', '#', '+', '.', ' '] : _ref$chars,
+				    chars = _ref$chars === undefined ? ['@', '#', '$', '=', '*', '!', ';', ':', '~', '-', ',', '.', ' '] : _ref$chars,
 				    _ref$verbose = _ref.verbose,
 				    verbose = _ref$verbose === undefined ? false : _ref$verbose,
 				    _ref$debug = _ref.debug,
 				    debug = _ref$debug === undefined ? false : _ref$debug,
 				    _ref$sourceSettings = _ref.sourceSettings,
-				    sourceSettings = _ref$sourceSettings === undefined ? {} : _ref$sourceSettings;
+				    sourceSettings = _ref$sourceSettings === undefined ? {} : _ref$sourceSettings,
+				    _ref$callback = _ref.callback,
+				    callback = _ref$callback === undefined ? null : _ref$callback;
 
 				_classCallCheck(this, ascii);
 
@@ -56,6 +58,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 				/** @type {object} Various settings for sources, especially for Google Images. */
 				this.sourceSettings = sourceSettings;
+
+				/** Callback function */
+				this.callback = callback;
 
 				/**
      * CONSTANTS
@@ -152,16 +157,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 						var getChar = function getChar(val) {
 							return _this2.chars[Math.round(val * charLen)];
 						};
+						var isAlpha = function isAlpha(rgbA, val) {
+							return rgbA == 0 && val == 0;
+						};
 						var imgData = ctx.getImageData(0, 0, img.width, img.height).data;
 						var row = [''];
 
 						for (var i = 0; i < img.width * img.height; i++) {
-							var _ref2 = [imgData[i * 4], imgData[i * 4 + 1], imgData[i * 4 + 2]],
+							var iR = i * 4,
+							    iG = i * 4 + 1,
+							    iB = i * 4 + 2,
+							    iA = i * 4 + 3;
+							var _ref2 = [imgData[iR], imgData[iG], imgData[iB]],
 							    R = _ref2[0],
 							    G = _ref2[1],
 							    B = _ref2[2];
 
 							var val = (0.2126 * R + 0.7152 * G + 0.0722 * B) / 255;
+							if (isAlpha(imgData[iA], val)) {
+								val = 1;
+								R = 255;
+								G = 255;
+								B = 255;
+							}
 							row[0] += '%c' + getChar(val);
 							row.push('color: #fff; background-color: rgb(' + R + ', ' + G + ', ' + B + '); font-family: monospace, fixed; font-weight: bold;');
 							if (i % img.width === 0 && i !== 0) {
@@ -172,6 +190,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 								}
 								row = [''];
 							}
+						}
+						if (typeof _this2.callback === 'function') {
+							_this2.callback();
 						}
 					};
 				}
