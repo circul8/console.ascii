@@ -6,7 +6,9 @@ Let's extend console by adding some funny ascii art! 💥
 ## Installation
 
 `npm install`
+
 `npm run build` -> Building JS to **/dist** folder.
+
 `npm run test` -> Running tests.
 
 ## Usage
