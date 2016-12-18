@@ -3,6 +3,12 @@ Let's extend console by adding some funny ascii art! 💥
 
 ![](http://144.wtf/NRNT+)
 
+## Installation
+
+`npm install`
+`npm run build` -> Building JS to **/dist** folder.
+`npm run test` -> Running tests.
+
 ## Usage
 
 `console.ascii('search term', {settings});`
