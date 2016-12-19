@@ -1,5 +1,8 @@
 # console.ascii()
-Let's extend console by adding some funny ascii art! 💥
+
+[![Build Status](https://travis-ci.org/Circul8/console.ascii.svg?branch=master)](https://travis-ci.org/Circul8/console.ascii)
+
+Let's extend browsers `console` by adding some funny ascii art! Run the `console.ascii()` and see the magic happens! 💥
 
 ![](http://144.wtf/NRNT+)
 
