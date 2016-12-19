@@ -4,7 +4,7 @@
   "description": "Let's extend javascript console by adding some funny ascii art there! 💥",
   "main": "console.ascii.js",
   "scripts": {
-    "test": "karma start tests/karma.conf.js",
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS tests/karma.conf.js",
     "build": "browserify src/console.ascii.js -o dist/console.ascii.js -t babelify --presets env"
   },
   "repository": {
