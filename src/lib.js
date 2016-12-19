@@ -65,7 +65,7 @@ class ascii {
 
 
 	/**
-	 * Get the image frou source and do the ASCII magic baby!
+	 * Get the image from source and do the ASCII magic baby!
 	 * @param  {string} search Search query.
 	 * @return {void}
 	 */
