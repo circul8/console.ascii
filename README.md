@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/circul8/console.ascii.svg?branch=master)](https://travis-ci.org/Circul8/console.ascii)
 
-Let's extend browsers `console` by adding some funny ascii art! Run the `console.ascii()` and see the magic happens! 💥
+Let's extend browser's `console` by adding some funny ascii art! Run the `console.ascii()` and see the magic happens! 💥
+
+[See the demo.](http://codepen.io/lucien144/full/yVGWqv/)
 
 ![](http://144.wtf/NRNT+)
 
